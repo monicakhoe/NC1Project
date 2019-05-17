@@ -16,10 +16,13 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
    
     var pulseLayers = [CAShapeLayer]()
     var audioPlayer: AVAudioPlayer?
+    var run_animation = true
     
     @IBAction func roundButton(_ sender: UIButton) {
         
         playSound()
+        run_animation = false
+//        audioPlayer?.setVolume(1, fadeDuration: 2)
         
     }
     
@@ -43,16 +46,21 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             roundButton.layer.addSublayer(pulseLayer)
             pulseLayers.append(pulseLayer)
         }
-       
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            self.animatePulse(index: 0)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                self.animatePulse(index: 1)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                    self.animatePulse(index: 2)
+        
+        if run_animation == true {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.animatePulse(index: 0)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    self.animatePulse(index: 1)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                        self.animatePulse(index: 2)
+                    }
                 }
             }
         }
+//        self.animatePulse(index: 0)
+//        self.animatePulse(index: 1)
+//        self.animatePulse(index: 2)
 
     }
     
@@ -77,21 +85,27 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
     }
     
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        print("done")
+    }
+    
     func playSound() {
         
-        let url = Bundle.main.url(forResource: "<#T##String?#>", withExtension: "<#T##String?#>")
-        
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            guard let player = audioPlayer else { return }
+        if audioPlayer == nil {
             
-            audioPlayer.prepareToPlay()
-            audioPlayer.delegate = self
-            audioPlayer.numberOfLoops = -1
-            audioPlayer.play()
+            guard let url = Bundle.main.url(forResource: "horror", withExtension: "mp3")
+                else { return }
             
-            soundPlayed = true
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.prepareToPlay()
+            } catch let error {
+                print(error.localizedDescription)
+            }
+            
         }
+        audioPlayer?.play()
+//        audioPlayer?.stop()
         
     }
     

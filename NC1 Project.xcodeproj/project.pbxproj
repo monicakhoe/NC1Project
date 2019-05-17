@@ -12,6 +12,7 @@
 		E962E765228ECC460015A311 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E962E763228ECC460015A311 /* Main.storyboard */; };
 		E962E767228ECC470015A311 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E962E766228ECC470015A311 /* Assets.xcassets */; };
 		E962E76A228ECC470015A311 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E962E768228ECC470015A311 /* LaunchScreen.storyboard */; };
+		E962E773228EF85C0015A311 /* horror.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E962E772228EF85C0015A311 /* horror.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		E962E766228ECC470015A311 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E962E769228ECC470015A311 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E962E76B228ECC470015A311 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E962E772228EF85C0015A311 /* horror.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = horror.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 		E962E771228EF03C0015A311 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				E962E772228EF85C0015A311 /* horror.mp3 */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -132,6 +135,7 @@
 			files = (
 				E962E76A228ECC470015A311 /* LaunchScreen.storyboard in Resources */,
 				E962E767228ECC470015A311 /* Assets.xcassets in Resources */,
+				E962E773228EF85C0015A311 /* horror.mp3 in Resources */,
 				E962E765228ECC460015A311 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
