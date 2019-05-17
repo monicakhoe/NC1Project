@@ -54,6 +54,7 @@
 		E962E75E228ECC460015A311 /* NC1 Project */ = {
 			isa = PBXGroup;
 			children = (
+				E962E771228EF03C0015A311 /* Audio */,
 				E962E75F228ECC460015A311 /* AppDelegate.swift */,
 				E962E761228ECC460015A311 /* ViewController.swift */,
 				E962E763228ECC460015A311 /* Main.storyboard */,
@@ -62,6 +63,13 @@
 				E962E76B228ECC470015A311 /* Info.plist */,
 			);
 			path = "NC1 Project";
+			sourceTree = "<group>";
+		};
+		E962E771228EF03C0015A311 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Audio;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
