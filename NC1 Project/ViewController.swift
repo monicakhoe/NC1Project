@@ -11,29 +11,53 @@ import AVFoundation
 
 class ViewController: UIViewController, AVAudioPlayerDelegate {
 
+    var pop: Bool = false
     
     @IBOutlet weak var roundButton: UIView!
-   
+    
     var pulseLayers = [CAShapeLayer]()
     var audioPlayer: AVAudioPlayer?
     var run_animation = true
     
+    
     @IBAction func roundButton(_ sender: UIButton) {
         
-        playSound()
-        run_animation = false
-//        audioPlayer?.setVolume(1, fadeDuration: 2)
-        
+//        playSound(rate: 1)
+//        run_animation = false
+//        UIView.animate(withDuration: 10) {
+//            self.roundButton.transform = CGAffineTransform(scaleX: 2, y: 2)
+//        }
+////        audioPlayer?.setVolume(1, fadeDuration: 2)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        roundButton.layer.masksToBounds = true
         roundButton.layer.cornerRadius = roundButton.frame.width/2
         createPulse()
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleGesture))
+        longPress.minimumPressDuration = 0.5
+        longPress.delaysTouchesBegan = true
+        longPress.delegate = self as? UIGestureRecognizerDelegate
+        self.roundButton.addGestureRecognizer(longPress)
+        
+        roundButton.backgroundColor = UIColor.grayColor()
     }
 
+//    @objc func longPressAction(){
+//        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressAction))
+//        self.view.addGestureRecognizer(longPress)
+//
+//        playSound()
+//        run_animation = false
+//        UIView.animate(withDuration: 10) {
+//            self.roundButton.transform = CGAffineTransform(scaleX: 2, y: 2)
+//        }
+//    }
+    
+    
+    
     func createPulse() {
+
         for _ in 0 ... 2{
             let circularPath = UIBezierPath(arcCenter: .zero, radius: UIScreen.main.bounds.size.width/2, startAngle: 0, endAngle: 2 * .pi, clockwise: true)
              let pulseLayer = CAShapeLayer()
@@ -45,6 +69,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             pulseLayer.position = CGPoint(x: roundButton.frame.size.width/2, y: roundButton.frame.size.width/2)
             roundButton.layer.addSublayer(pulseLayer)
             pulseLayers.append(pulseLayer)
+            
         }
         
         if run_animation == true {
@@ -58,13 +83,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                 }
             }
         }
-//        self.animatePulse(index: 0)
-//        self.animatePulse(index: 1)
-//        self.animatePulse(index: 2)
-
     }
     
     func animatePulse(index: Int) {
+
         pulseLayers[index].strokeColor = UIColor.red.cgColor
         pulseLayers[index].fillColor = UIColor.red.cgColor
         let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
@@ -85,19 +107,25 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         
     }
     
+    
+    
+    
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         print("done")
     }
     
-    func playSound() {
+    func playSound(rate:Float) {
         
         if audioPlayer == nil {
             
-            guard let url = Bundle.main.url(forResource: "horror", withExtension: "mp3")
+            guard let url = Bundle.main.url(forResource: "footsteps1", withExtension: "mp3")
                 else { return }
             
             do {
                 audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.numberOfLoops = -1
+                audioPlayer?.enableRate = true
+                audioPlayer?.rate = 1
                 audioPlayer?.prepareToPlay()
             } catch let error {
                 print(error.localizedDescription)
@@ -108,6 +136,41 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
 //        audioPlayer?.stop()
         
     }
+   // var enableRate: Bool { get set }
+    
+    var normalRate = 1.0
+    @IBAction func handleGesture(_ sender: UILongPressGestureRecognizer) {
+        
+        if sender.state == .began{
+            pulseLayers[0].isHidden = true
+            pulseLayers[1].isHidden = true
+            pulseLayers[2].isHidden = true
+            run_animation = false
+            playSound(rate: 2)
+            UIView.animate(withDuration: 10) {
+                self.roundButton.transform = CGAffineTransform(scaleX: 3, y: 3)
+                
+            }
+        }
+        if sender.state == .ended {
+            pulseLayers[0].isHidden = false
+            pulseLayers[1].isHidden = false
+            pulseLayers[2].isHidden = false
+            run_animation = false
+//            playSound()
+            audioPlayer?.stop()
+            UIView.animate(withDuration: 10) {
+                self.roundButton.transform = .identity
+                
+            }
+        }
+        
+//        if sender.state == .changed{
+//            print("hello")
+//            playSound(rate: Float(normalRate - 0.01))
+//        }
+    }
+    
     
 }
 

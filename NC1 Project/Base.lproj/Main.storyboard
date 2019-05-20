@@ -23,7 +23,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <action selector="roundButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OSn-hv-L9z"/>
+                                    <action selector="roundButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="w0D-hP-qBa"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -31,7 +31,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="roundButton" destination="tBM-IJ-yoq" id="iCd-e3-4m0"/>
+                        <outlet property="roundButton" destination="tBM-IJ-yoq" id="hi1-Ua-01W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
