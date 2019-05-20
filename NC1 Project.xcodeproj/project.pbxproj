@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E9396C4B2292A4F800269471 /* Creaking Door 1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E9396C4A2292A4F800269471 /* Creaking Door 1.mp3 */; };
+		E9396C4D2292A50C00269471 /* Creaking Door 2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E9396C4C2292A50C00269471 /* Creaking Door 2.mp3 */; };
 		E962E760228ECC460015A311 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E962E75F228ECC460015A311 /* AppDelegate.swift */; };
 		E962E762228ECC460015A311 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E962E761228ECC460015A311 /* ViewController.swift */; };
 		E962E765228ECC460015A311 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E962E763228ECC460015A311 /* Main.storyboard */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E9396C4A2292A4F800269471 /* Creaking Door 1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Creaking Door 1.mp3"; sourceTree = "<group>"; };
+		E9396C4C2292A50C00269471 /* Creaking Door 2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Creaking Door 2.mp3"; sourceTree = "<group>"; };
 		E962E75C228ECC460015A311 /* NC1 Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NC1 Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E962E75F228ECC460015A311 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E962E761228ECC460015A311 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +80,8 @@
 			children = (
 				E962E776229052E00015A311 /* Scream.mp3 */,
 				E962E7742290529C0015A311 /* footsteps1.mp3 */,
+				E9396C4A2292A4F800269471 /* Creaking Door 1.mp3 */,
+				E9396C4C2292A50C00269471 /* Creaking Door 2.mp3 */,
 				E962E772228EF85C0015A311 /* horror.mp3 */,
 			);
 			path = Audio;
@@ -140,7 +146,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E962E76A228ECC470015A311 /* LaunchScreen.storyboard in Resources */,
+				E9396C4B2292A4F800269471 /* Creaking Door 1.mp3 in Resources */,
 				E962E7752290529C0015A311 /* footsteps1.mp3 in Resources */,
+				E9396C4D2292A50C00269471 /* Creaking Door 2.mp3 in Resources */,
 				E962E767228ECC470015A311 /* Assets.xcassets in Resources */,
 				E962E773228EF85C0015A311 /* horror.mp3 in Resources */,
 				E962E765228ECC460015A311 /* Main.storyboard in Resources */,

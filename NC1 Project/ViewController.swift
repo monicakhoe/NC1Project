@@ -40,7 +40,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         longPress.delegate = self as? UIGestureRecognizerDelegate
         self.roundButton.addGestureRecognizer(longPress)
         
-        roundButton.backgroundColor = UIColor.grayColor()
+//        roundButton.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     }
 
 //    @objc func longPressAction(){
@@ -138,6 +138,33 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     }
    // var enableRate: Bool { get set }
     
+    func playSound2() {
+        guard let url = Bundle.main.url(forResource: "Creaking Door 1", withExtension: "mp3")
+            else { return }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.prepareToPlay()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        audioPlayer?.play()
+    }
+    
+    func playSound3() {
+        guard let url = Bundle.main.url(forResource: "Scream", withExtension: "mp3")
+            else { return }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.prepareToPlay()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        audioPlayer?.play()
+    }
+    
+    
     var normalRate = 1.0
     @IBAction func handleGesture(_ sender: UILongPressGestureRecognizer) {
         
@@ -147,9 +174,32 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             pulseLayers[2].isHidden = true
             run_animation = false
             playSound(rate: 2)
-            UIView.animate(withDuration: 10) {
+            
+            let currentWidth = roundButton.frame.width
+            
+            UIView.animate(withDuration: 10, animations: {
                 self.roundButton.transform = CGAffineTransform(scaleX: 3, y: 3)
+                self.roundButton.backgroundColor = UIColor(displayP3Red: 1, green: 0, blue: 0, alpha: 1)
+            }) { (finish) in
+                if self.roundButton.frame.width == (currentWidth*3) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        self.audioPlayer?.stop()
+                        self.roundButton.isHidden = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                            self.playSound2()
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                self.playSound3()
+                                UIView.animate(withDuration: 1, animations: {
+                                    self.view.backgroundColor = #colorLiteral(red: 0.521568656, green: 0.1098039225, blue: 0.05098039284, alpha: 1)
+                                })
+                            }
+                        }
+                    }
+                }
                 
+//                if {
+//
+//                }
             }
         }
         if sender.state == .ended {
@@ -159,8 +209,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             run_animation = false
 //            playSound()
             audioPlayer?.stop()
-            UIView.animate(withDuration: 10) {
+            UIView.animate(withDuration: 5) {
                 self.roundButton.transform = .identity
+                self.roundButton.backgroundColor = UIColor.white
+
                 
             }
         }
