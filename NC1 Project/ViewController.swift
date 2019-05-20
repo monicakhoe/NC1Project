@@ -125,12 +125,30 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                 audioPlayer = try AVAudioPlayer(contentsOf: url)
                 audioPlayer?.numberOfLoops = -1
                 audioPlayer?.enableRate = true
-                audioPlayer?.rate = 1
+                audioPlayer?.rate = rate
                 audioPlayer?.prepareToPlay()
             } catch let error {
                 print(error.localizedDescription)
             }
             
+            Timer.scheduledTimer(withTimeInterval: 5.5, repeats: false) { _ in
+                
+//                self.audioPlayer?.stop()
+//
+//                guard let url = Bundle.main.url(forResource: "footsteps1", withExtension: "mp3")
+//                    else { return }
+//
+//                do {
+//                    self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+//                    self.audioPlayer?.numberOfLoops = -1
+//                    self.audioPlayer?.enableRate = true
+                    self.audioPlayer?.rate = 2
+//                    self.audioPlayer?.prepareToPlay()
+//                    self.audioPlayer?.play()
+//                } catch let error {
+//                    print(error.localizedDescription)
+//                }
+            }
         }
         audioPlayer?.play()
 //        audioPlayer?.stop()
@@ -173,7 +191,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             pulseLayers[1].isHidden = true
             pulseLayers[2].isHidden = true
             run_animation = false
-            playSound(rate: 2)
+            playSound(rate: 1)
             
             let currentWidth = roundButton.frame.width
             
