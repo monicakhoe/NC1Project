@@ -15,6 +15,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     var pulseLayers = [CAShapeLayer]()
     var audioPlayer: AVAudioPlayer?
+    var beginPlayer: AVAudioPlayer?
     var run_animation = true
     
     @IBOutlet weak var jumpScareImage: UIImageView!
@@ -31,7 +32,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.openingSound(isPlay: true)
+        openingSound(isPlay: false)
         jumpScareImage.isHidden = true
         roundButton.layer.cornerRadius = roundButton.frame.width/2
         createPulse()
@@ -188,29 +189,34 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             else { return }
         
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer?.prepareToPlay()
-            audioPlayer?.numberOfLoops = -1
+            beginPlayer = try AVAudioPlayer(contentsOf: url)
+            beginPlayer?.prepareToPlay()
+            beginPlayer?.numberOfLoops = -1
         } catch let error {
             print(error.localizedDescription)
         }
+        
         if isPlay == true {
-            audioPlayer?.play()
+            self.beginPlayer?.stop()
         } else if isPlay == false{
-            audioPlayer?.stop()
+            self.beginPlayer?.play()
         }
+        
+        
     }
     
     
     var normalRate = 1.0
+    
     @IBAction func handleGesture(_ sender: UILongPressGestureRecognizer) {
         
         if sender.state == .began{
-            openingSound(isPlay: false)
+            openingSound(isPlay: true)
             pulseLayers[0].isHidden = true
             pulseLayers[1].isHidden = true
             pulseLayers[2].isHidden = true
             run_animation = false
+//            openingSound(isPlay: false)
             playSound(rate: 1)
             
             
@@ -222,7 +228,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
             }) { (finish) in
                 if self.roundButton.frame.width == (currentWidth*3) {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        self.audioPlayer?.stop()
+//                        self.audioPlayer?.stop()
                         self.roundButton.isHidden = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                             self.playSound2()
@@ -231,19 +237,23 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                                 UIView.animate(withDuration: 1, animations: {
                                     self.jumpScareImage.isHidden = false
                                     self.view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-                                    UIView.animate(withDuration: 0.1, animations: {
+                                    UIView.animate(withDuration: 0.0001, animations: {
                                         self.jumpScareImage.alpha = 1
                                         self.jumpScareImage.transform = .init(scaleX: 5, y: 5)
-                                    }, completion: nil)
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5){
+                                            UIView.animate(withDuration: 0.0001, animations: {
+                                                self.jumpScareImage.alpha = 0
+                                                self.jumpScareImage.transform = .init(scaleX: 0, y: 0)
+                                            })
+                                        }
+                                    })
                                 })
                             }
                         }
                     }
                 }
                 
-//                if {
-//
-//                }
+
             }
         }
         if sender.state == .ended {
@@ -270,10 +280,3 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
 }
 
-
-//UIView *myView = [[self subviews] objectAtIndex:0];
-//CALayer *layer = myView.layer;
-//CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
-//rotationAndPerspectiveTransform.m34 = 1.0 / -500;
-//rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 45.0f * M_PI / 180.0f, 0.0f, 1.0f, 0.0f);
-//layer.transform = rotationAndPerspectiveTransform;
