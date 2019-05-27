@@ -10,8 +10,6 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController, AVAudioPlayerDelegate {
-
-    var pop: Bool = false
     
     @IBOutlet weak var roundButton: UIView!
     
@@ -19,6 +17,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     var audioPlayer: AVAudioPlayer?
     var run_animation = true
     
+    @IBOutlet weak var jumpScareImage: UIImageView!
     
     @IBAction func roundButton(_ sender: UIButton) {
         
@@ -32,6 +31,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.openingSound(isPlay: true)
+        jumpScareImage.isHidden = true
         roundButton.layer.cornerRadius = roundButton.frame.width/2
         createPulse()
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleGesture))
@@ -182,16 +183,36 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
         audioPlayer?.play()
     }
     
+    func openingSound(isPlay: Bool) {
+        guard let url = Bundle.main.url(forResource: "Opening", withExtension: "mp3")
+            else { return }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.numberOfLoops = -1
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        if isPlay == true {
+            audioPlayer?.play()
+        } else if isPlay == false{
+            audioPlayer?.stop()
+        }
+    }
+    
     
     var normalRate = 1.0
     @IBAction func handleGesture(_ sender: UILongPressGestureRecognizer) {
         
         if sender.state == .began{
+            openingSound(isPlay: false)
             pulseLayers[0].isHidden = true
             pulseLayers[1].isHidden = true
             pulseLayers[2].isHidden = true
             run_animation = false
             playSound(rate: 1)
+            
             
             let currentWidth = roundButton.frame.width
             
@@ -208,7 +229,12 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                                 self.playSound3()
                                 UIView.animate(withDuration: 1, animations: {
-                                    self.view.backgroundColor = #colorLiteral(red: 0.521568656, green: 0.1098039225, blue: 0.05098039284, alpha: 1)
+                                    self.jumpScareImage.isHidden = false
+                                    self.view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+                                    UIView.animate(withDuration: 0.1, animations: {
+                                        self.jumpScareImage.alpha = 1
+                                        self.jumpScareImage.transform = .init(scaleX: 5, y: 5)
+                                    }, completion: nil)
                                 })
                             }
                         }
@@ -244,3 +270,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate {
     
 }
 
+
+//UIView *myView = [[self subviews] objectAtIndex:0];
+//CALayer *layer = myView.layer;
+//CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+//rotationAndPerspectiveTransform.m34 = 1.0 / -500;
+//rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 45.0f * M_PI / 180.0f, 0.0f, 1.0f, 0.0f);
+//layer.transform = rotationAndPerspectiveTransform;
